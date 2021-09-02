@@ -48,7 +48,7 @@ function wheelDown(){
             position = 0;
         };
 
-        $(".frame").eq(position).append(play);
+        $(".frame").eq(0).append(play);
 
         $(".frame").eq(position).css({
             top: `calc(${70}% + ${-50 * (position +1)}px)`,
@@ -56,6 +56,17 @@ function wheelDown(){
             zIndex: position * -1
         });
     };
+
+    
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+ 
+    onYouTubeIframeAPIReady(player);
 };
 
 function wheelUp(){
@@ -64,8 +75,9 @@ function wheelUp(){
     }, 700);
     
     $(".frame").last().prependTo($(".wrapper"));
-    let vid = $(".frame").eq(0).children("iframe").attr("src");
-    $(".frame").eq(0).children("iframe").attr("src", vid+"?autoplay=1&volume=0");
+    // let vid = $(".frame").eq(0).children("iframe").attr("src");
+    // $(".frame").eq(0).children("iframe").attr("src", vid+"?autoplay=1&volume=0");
+    $("#player").remove();
 
     for(el of frame){
         position--;
@@ -74,6 +86,7 @@ function wheelUp(){
             position = frame.length;
         };
 
+        $(".frame").eq(0).append(play);
 
         $(".frame").eq(position -1).css({
             top: `calc(${70}% + ${-50 * position}px)`,
@@ -82,5 +95,41 @@ function wheelUp(){
         });
 
     };
+
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+ 
+    onYouTubeIframeAPIReady(player);
 };
 
+function onYouTubeIframeAPIReady(player) {
+    player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: '',
+        events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+        }
+    });
+};
+
+function onPlayerReady(event) {
+    event.target.playVideo();
+};
+
+var done = false;
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING && !done) {
+        setTimeout(stopVideo, 6000);
+        done = true;
+    };
+};
+function stopVideo() {
+    player.stopVideo();
+};

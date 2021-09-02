@@ -8,17 +8,47 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/8fb19dd542.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script defer src="js/custom.js"></script>
-    <!-- <script defer src="js/youtube.js"></script> -->
+    <script src="js/grained.js"></script>
+    <!-- <script defer src="js/custom.js"></script> -->
+    <script defer src="js/youtube.js"></script>
     <!-- <script defer src="js/player.js"></script> -->
+    <script>
+        $(document).ready(function(){
+            
+            grained('#container', {
+                "animate": true,
+                "patternWidth": 96.45,
+                "patternHeight": 85.64,
+                "grainOpacity": 0.08,
+                "grainDensity": 1.4,
+                "grainWidth": 1,
+                "grainHeight": 1
+            })
+        })
+    </script>
 </head>
 <body>
     <header id="header"></header>
 
+    <div id="container">
+        <div class="grained"></div>
+    </div>
+
     <main id="main">
+        <div class="box">
+            
+
+            <svg width="30" height="150" class="left_tri">
+                <polygon fill="rgb(128, 107, 68)" points="0,150 29,150 29,0"></polygon>
+            </svg>
+
+            <svg width="30" height="150" class="right_tri">
+                 <polygon fill="rgb(128, 107, 68)" points="0,150 0,0 29,150"></polygon>
+            </svg>
+        </div>
         <div class="wrapper">
+            
             <article class="frame">
-                <!-- <div class="lp_frame"></div> -->
             </article>
             <article class="frame">
             </article>
@@ -35,6 +65,15 @@
             <article class="frame">
             </article>
         </div>
+
+        <div class="box_front">
+            <p>
+                MAC MILLER'S<br>
+                ARCHIVES
+            </p>
+
+            <span>2021 Designed by 0jo&copy;.</span>
+        </div>
        
         <div class="mini_player">
             <div class="track_info">
@@ -49,8 +88,11 @@
                 <span class="prev">
                     <i class="fas fa-step-backward"></i>
                 </span>
-                <span class="play">
+                <span class="play on">
                     <i class="fas fa-play"></i>
+                </span>
+                <span class="pause">
+                    <i class="fas fa-pause"></i>
                 </span>
                 <span class="next">
                     <i class="fas fa-step-forward"></i>

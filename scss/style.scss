@@ -1,10 +1,77 @@
 @charset "utf-8";
 @import "reset";
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+#container{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .grained{
+        background-color :rgb(124, 124, 124);
+    }
+}
 
 #main{
     width: 100%;
     height: 100vh;
     position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .box{
+        width: 350px;
+        height: 200px;
+        position: absolute;
+        top: 76%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+
+
+        .left_tri{
+            position: absolute;
+            top: -150px;
+            left: 0;
+        }
+
+        .right_tri{
+            position: absolute;
+            top: -150px;
+            right: -1px;
+        }
+    }
+
+    
+    .box_front{
+        width: 350px;
+        height: 200px;
+        background: rgb(201, 163, 92);
+        position: absolute;
+        top: 76%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+
+        p{
+            font: bold 32px/1 'Amatic SC', cursive;
+            color: #111;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        span{
+            font: 15px/1 'Amatic SC', cursive;
+            color: #333;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+    }
 
     .wrapper{
         width: 100%;
@@ -12,6 +79,7 @@
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 5;
 
         .frame{
             position: absolute;
@@ -44,6 +112,12 @@
                     transform: translateY(-50%);
                 }
             }
+
+            #player{
+                position: fixed;
+                top: -9999px;
+                left: -9999px;
+            }
         }
     }
     
@@ -53,9 +127,10 @@
         top: 20px;
         right: 40px;
         display: flex;
+        z-index: 5;
 
         .track_info{
-            width: 120px;
+            width: 150px;
             height: 100%;
             border: 1px solid red;
             display: flex;
@@ -64,6 +139,21 @@
                 width: 35px;
                 height: 100%;
                 border: 1px solid green;
+            }
+
+            .info{
+                width: 115px;
+                padding: 3px 10px;
+
+                p{
+                    font: bold 14px/1 'arial';
+                    color: #111;
+                }
+
+                h3{
+                    font: 12px/1 'arial';
+                    color: #999;
+                }
             }
         }
 
@@ -83,6 +173,10 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                &.on{
+                    display: none;
+                }
             }
         }
 

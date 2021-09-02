@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap");
 * {
   margin: 0px;
   padding: 0px;
@@ -30,10 +31,67 @@ input, a, button {
   opacity: 0;
 }
 
+#container {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#container .grained {
+  background-color: #7c7c7c;
+}
+
 #main {
   width: 100%;
   height: 100vh;
   position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#main .box {
+  width: 350px;
+  height: 200px;
+  position: absolute;
+  top: 76%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+#main .box .left_tri {
+  position: absolute;
+  top: -150px;
+  left: 0;
+}
+#main .box .right_tri {
+  position: absolute;
+  top: -150px;
+  right: -1px;
+}
+#main .box_front {
+  width: 350px;
+  height: 200px;
+  background: #c9a35c;
+  position: absolute;
+  top: 76%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+#main .box_front p {
+  font: bold 32px/1 "Amatic SC", cursive;
+  color: #111;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+#main .box_front span {
+  font: 15px/1 "Amatic SC", cursive;
+  color: #333;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 #main .wrapper {
   width: 100%;
@@ -41,6 +99,7 @@ input, a, button {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 5;
 }
 #main .wrapper .frame {
   position: absolute;
@@ -70,15 +129,21 @@ input, a, button {
 #main .wrapper .frame:hover .lp_frame {
   transform: translateY(-50%);
 }
+#main .wrapper .frame #player {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+}
 #main .mini_player {
   height: 35px;
   position: absolute;
   top: 20px;
   right: 40px;
   display: flex;
+  z-index: 5;
 }
 #main .mini_player .track_info {
-  width: 120px;
+  width: 150px;
   height: 100%;
   border: 1px solid red;
   display: flex;
@@ -87,6 +152,18 @@ input, a, button {
   width: 35px;
   height: 100%;
   border: 1px solid green;
+}
+#main .mini_player .track_info .info {
+  width: 115px;
+  padding: 3px 10px;
+}
+#main .mini_player .track_info .info p {
+  font: bold 14px/1 "arial";
+  color: #111;
+}
+#main .mini_player .track_info .info h3 {
+  font: 12px/1 "arial";
+  color: #999;
 }
 #main .mini_player .player_btn {
   width: 200px;
@@ -104,6 +181,9 @@ input, a, button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#main .mini_player .player_btn span.on {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
