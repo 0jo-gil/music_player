@@ -50,6 +50,59 @@ input, a, button {
   top: 0;
   left: 0;
 }
+#main .vinyl {
+  width: 500px;
+  height: 500px;
+  position: fixed;
+  right: -250px;
+  top: 50%;
+  margin-top: -250px;
+  animation: vinyl 10s linear infinite;
+}
+#main .vinyl .vinyl_con {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #222;
+  position: relative;
+}
+#main .vinyl .vinyl_con .song_tit {
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#main .vinyl .vinyl_con .song_tit .vinyl_inner_tit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font: 12px/1 "arial";
+}
+#main .vinyl .vinyl_con::before {
+  content: "";
+  display: block;
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+#main .vinyl .vinyl_con::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #222;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
 #main .box {
   width: 350px;
   height: 200px;
@@ -105,14 +158,14 @@ input, a, button {
   position: absolute;
   width: 350px;
   height: 350px;
-  border: 1px solid red;
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 620px;
   background-position: center;
   transition: 0.5s;
+  border-radius: 2px;
 }
 #main .wrapper .frame .lp_frame {
   width: 310px;
@@ -135,40 +188,41 @@ input, a, button {
   left: -9999px;
 }
 #main .mini_player {
-  height: 35px;
+  height: 60px;
   position: absolute;
   top: 20px;
   right: 40px;
   display: flex;
   z-index: 5;
+  background: #eee;
 }
 #main .mini_player .track_info {
-  width: 150px;
   height: 100%;
-  border: 1px solid red;
   display: flex;
 }
 #main .mini_player .track_info .thumb {
-  width: 35px;
+  width: 60px;
   height: 100%;
-  border: 1px solid green;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #main .mini_player .track_info .info {
-  width: 115px;
-  padding: 3px 10px;
+  width: 200px;
+  padding: 10px 20px;
 }
 #main .mini_player .track_info .info p {
-  font: bold 14px/1 "arial";
+  font: bold 12px/1 "arial";
   color: #111;
+  margin-bottom: 5px;
 }
 #main .mini_player .track_info .info h3 {
-  font: 12px/1 "arial";
+  font: 11px/1 "arial";
   color: #999;
 }
 #main .mini_player .player_btn {
   width: 200px;
   height: 100%;
-  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
   font-size: 0;
@@ -181,9 +235,19 @@ input, a, button {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 #main .mini_player .player_btn span.on {
   display: none;
+}
+
+@keyframes vinyl {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
