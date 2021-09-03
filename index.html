@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MUSIC PLAYER</title>
+    <title>Music Player</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/8fb19dd542.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/grained.js"></script>
     <!-- <script defer src="js/custom.js"></script> -->
+    <!-- <script defer src="js/loading.js"></script> -->
     <script defer src="js/youtube.js"></script>
     <!-- <script defer src="js/player.js"></script> -->
     <script>
@@ -38,6 +39,7 @@
 
         <div class="vinyl">
             <div class="vinyl_con">
+                <div class="vinyl_thumb thumb"></div>
                 <p class="song_tit vinyl_tit"></p>
             </div>
         </div>
@@ -106,8 +108,39 @@
                     <i class="fas fa-step-forward"></i>
                 </span>
             </div>
-        </div>
 
+            <div class="more_btn">
+                <a href="#" class="more_inner_btn"></a>
+            </div>
+        </div>
     </main>
+
+    <div class="more_player">
+        <div class="more_player_wrap">
+            <div class="more_info">
+                <div class="more_thumb thumb"></div>
+                <div class="more_inner_info">
+                    <p class="song_tit">hi</p>
+                    <h3 class="singer">Chet Baker</h3>
+                </div>
+            </div>
+
+            <div class="more_player_btn">
+                <span class="prev">
+                    <i class="fas fa-step-backward"></i>
+                </span>
+                <span class="play">
+                    <i class="fas fa-play"></i>
+                </span>
+                <span class="pause on">
+                    <i class="fas fa-pause"></i>
+                </span>
+                <span class="next">
+                    <i class="fas fa-step-forward"></i>
+                </span>
+            </div>
+        </div>
+        <div class="more_player_list"></div>
+    </div>
 </body>
 </html>

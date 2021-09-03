@@ -26,17 +26,16 @@
         width: 500px;
         height: 500px;
         position: fixed;
-        right: -250px;
-        // right: 0;
+        right: -100%;
         top: 50%;
         margin-top: -250px;
-        animation: vinyl 10s linear infinite;
+        transition: 1s;
 
         .vinyl_con{
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: #222;
+            background: #000;
             position: relative;
 
             .song_tit{
@@ -50,15 +49,42 @@
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    font: 12px/1 'arial';
+                    font: bold 14px/1 'arial';
+                    color: #fff;
                 }
             }
 
-            &::before{
+            .vinyl_thumb{
+                width: 240px;
+                height: 240px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 440px;
+            }
+
+            // &::before{
+            //     content: '';
+            //     display: block;
+            //     width: 200px;
+            //     height: 200px;
+            //     background: #fff;
+            //     position: absolute;
+            //     top: 50%;
+            //     left: 50%;
+            //     transform: translate(-50%, -50%);
+            //     border-radius: 50%;
+            // }
+
+            &::after{
                 content: '';
                 display: block;
-                width: 200px;
-                height: 200px;
+                width: 10px;
+                height: 10px;
                 background: #fff;
                 position: absolute;
                 top: 50%;
@@ -66,19 +92,15 @@
                 transform: translate(-50%, -50%);
                 border-radius: 50%;
             }
+        }
 
-            &::after{
-                content: '';
-                display: block;
-                width: 10px;
-                height: 10px;
-                background: #222;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                border-radius: 50%;
-            }
+        &.on{
+            right: -250px;
+            animation: vinyl 10s linear infinite;
+        }
+
+        &.stop{
+            animation-play-state: paused;
         }
     }
 
@@ -182,20 +204,21 @@
     }
     
     .mini_player{
-        height: 60px;
+        height: 40px;
         position: absolute;
         top: 20px;
-        right: 40px;
+        right: 20px;
         display: flex;
         z-index: 5;
-        background: #eee;
+        transition: 1s;
 
         .track_info{
             height: 100%;
             display: flex;
+            border-right: 1px solid #aaa;
 
             .thumb{
-                width: 60px;
+                width: 40px;
                 height: 100%;
                 background-size: cover;
                 background-position: center;
@@ -203,17 +226,20 @@
             }
 
             .info{
-                width: 200px;
-                padding: 10px 20px;
+                width: 160px;
+                padding: 0 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
 
                 p{
-                    font: bold 12px/1 'arial';
+                    font: bold 13px/1 'arial';
                     color: #111;
                     margin-bottom: 5px;
                 }
 
                 h3{
-                    font: 11px/1 'arial';
+                    font: 12px/1 'arial';
                     color: #999;
                 }
             }
@@ -222,11 +248,10 @@
         .player_btn{
             width: 200px;
             height: 100%;
-            // border: 1px solid blue;
             display: flex;
             justify-content: space-between;
             font-size: 0;
-            padding: 0 20px;
+            padding: 0 10px;
 
             span{
                 display: inline-block;
@@ -242,6 +267,182 @@
                 }
             }
         }
+
+        .more_btn{
+            width: 80px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .more_inner_btn{
+                display: block;
+                width: 30%;
+                height: 25%;
+                position: relative;
+
+                &::before{
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    background: #111;
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    transition: 0.5s;
+                }
+
+                &::after{
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    background: #111;
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    transition: 0.5s;
+                }
+
+                &:hover{
+
+                    &::before{
+                        transform: translateX(-5px);
+                    }
+
+                    &::after{
+                        transform: translateX(5px);
+                    }
+                }
+            }     
+        }
+
+        &.on{
+            right: -100%;
+        }
+    }
+}
+
+.loading_page{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 1.5s;
+
+    h2{
+        font: bold 120px/1 'arial';
+        color: #fff;
+    }
+
+    p{
+        font: bold 40px/1 'arial';
+        color: #fff;
+    }
+
+    &.on{
+        top: -100%;
+    }
+}
+
+
+
+.bg_filter{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    z-index: 11;
+}
+
+.more_player{
+    width: 450px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    z-index: 15;
+    transition: 1s;
+    box-shadow: 0px 25px 60px 0px rgb(97 45 45 / 40%);
+    background: #eee;
+
+    .more_player_wrap{
+        width: 100%;
+        height: 30%;
+        background: #fef4ea;
+        padding: 20px;
+
+        .more_info{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+
+            .more_thumb{
+                width: 120px;
+                height: 120px;
+                background-size: 212px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .more_inner_info{
+                width: calc(100% - 120px);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                padding-left: 20px;
+
+                .song_tit{
+                    font: bold 24px/1 'arial';
+                    color: #111;
+                    margin-bottom: 10px;
+                }
+                .singer{
+                    font: bold 16px/1 'arial';
+                    color: #999;
+                }
+            }
+        }
+
+        .more_player_btn{
+            width: 120px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0;
+
+            span{
+                display: inline-block;
+                width: 35px;
+                font-size: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+
+                &.on{
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .more_player_list{
+        width: 100%;
+        height: 70%;
+    }
+
+    &.on{
+        right: 0;
     }
 }
 

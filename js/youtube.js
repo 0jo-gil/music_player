@@ -13,6 +13,32 @@ var player;
 
 callData();
 
+$(".more_inner_btn").on("click", function(e){
+    e.preventDefault();
+
+    $(".mini_player").addClass("on");
+    toggle(".more_player");
+
+    $("more_player").addClass("on");
+
+    $("body").append(
+        $("<div class='bg_filter'>")
+            .css({opacity: 0.5})
+            .fadeIn(500)
+    );
+});
+
+function toggle(el){
+    let isOn = $(el).hasClass("on");
+
+    if(isOn){
+        $(el).removeClass("on");
+    } else {
+        $(el).addClass("on");
+    };
+
+}
+
 function callData(){
     $.ajax({
         url: "https://www.googleapis.com/youtube/v3/playlistItems", 
@@ -55,7 +81,7 @@ function createList(items){
             src: "https://www.youtube.com/embed/"+vidId1
         });
 
-        window.addEventListener("mousewheel", (e)=>{
+        document.querySelector("#main").addEventListener("mousewheel", (e)=>{
             let wheel = e.deltaY;
         
             if(isScroll) return;
@@ -76,12 +102,14 @@ function createList(items){
         player.playVideo();
         $(".pause").removeClass("on");
         $(".play").addClass("on");
+        $(".vinyl").removeClass("stop");
     });
     
     $(".pause").on("click", function(){
         player.pauseVideo();
         $(".play").removeClass("on");
         $(".pause").addClass("on");
+        $(".vinyl").addClass("stop");
     });
 
     $(".next").on("click", function(){
@@ -143,6 +171,9 @@ function wheelDown(items){
     let tit = items[num].snippet.title;
 
     $(".thumb").css({backgroundImage: `url(${imgSrc})`});
+
+    $(".vinyl").addClass("on");
+    $(".vinyl").removeClass("stop");
 
 
     $(".song_tit").text(tit);
@@ -216,6 +247,9 @@ function wheelUp(items){
                 $("<span class='vinyl_inner_tit'>").text(el)
         )
     };
+
+    $(".vinyl").addClass("on");
+    $(".vinyl").removeClass("stop");
 
     for(let el of frame){
         position--;

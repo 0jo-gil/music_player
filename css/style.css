@@ -54,16 +54,16 @@ input, a, button {
   width: 500px;
   height: 500px;
   position: fixed;
-  right: -250px;
+  right: -100%;
   top: 50%;
   margin-top: -250px;
-  animation: vinyl 10s linear infinite;
+  transition: 1s;
 }
 #main .vinyl .vinyl_con {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #222;
+  background: #000;
   position: relative;
 }
 #main .vinyl .vinyl_con .song_tit {
@@ -77,13 +77,26 @@ input, a, button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font: 12px/1 "arial";
+  font: bold 14px/1 "arial";
+  color: #fff;
 }
-#main .vinyl .vinyl_con::before {
+#main .vinyl .vinyl_con .vinyl_thumb {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 440px;
+}
+#main .vinyl .vinyl_con::after {
   content: "";
   display: block;
-  width: 200px;
-  height: 200px;
+  width: 10px;
+  height: 10px;
   background: #fff;
   position: absolute;
   top: 50%;
@@ -91,17 +104,12 @@ input, a, button {
   transform: translate(-50%, -50%);
   border-radius: 50%;
 }
-#main .vinyl .vinyl_con::after {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  background: #222;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
+#main .vinyl.on {
+  right: -250px;
+  animation: vinyl 10s linear infinite;
+}
+#main .vinyl.stop {
+  animation-play-state: paused;
 }
 #main .box {
   width: 350px;
@@ -188,36 +196,40 @@ input, a, button {
   left: -9999px;
 }
 #main .mini_player {
-  height: 60px;
+  height: 40px;
   position: absolute;
   top: 20px;
-  right: 40px;
+  right: 20px;
   display: flex;
   z-index: 5;
-  background: #eee;
+  transition: 1s;
 }
 #main .mini_player .track_info {
   height: 100%;
   display: flex;
+  border-right: 1px solid #aaa;
 }
 #main .mini_player .track_info .thumb {
-  width: 60px;
+  width: 40px;
   height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 #main .mini_player .track_info .info {
-  width: 200px;
-  padding: 10px 20px;
+  width: 160px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 #main .mini_player .track_info .info p {
-  font: bold 12px/1 "arial";
+  font: bold 13px/1 "arial";
   color: #111;
   margin-bottom: 5px;
 }
 #main .mini_player .track_info .info h3 {
-  font: 11px/1 "arial";
+  font: 12px/1 "arial";
   color: #999;
 }
 #main .mini_player .player_btn {
@@ -226,7 +238,7 @@ input, a, button {
   display: flex;
   justify-content: space-between;
   font-size: 0;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 #main .mini_player .player_btn span {
   display: inline-block;
@@ -239,6 +251,157 @@ input, a, button {
 }
 #main .mini_player .player_btn span.on {
   display: none;
+}
+#main .mini_player .more_btn {
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main .mini_player .more_btn .more_inner_btn {
+  display: block;
+  width: 30%;
+  height: 25%;
+  position: relative;
+}
+#main .mini_player .more_btn .more_inner_btn::before {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #111;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+}
+#main .mini_player .more_btn .more_inner_btn::after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #111;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: 0.5s;
+}
+#main .mini_player .more_btn .more_inner_btn:hover::before {
+  transform: translateX(-5px);
+}
+#main .mini_player .more_btn .more_inner_btn:hover::after {
+  transform: translateX(5px);
+}
+#main .mini_player.on {
+  right: -100%;
+}
+
+.loading_page {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 1.5s;
+}
+.loading_page h2 {
+  font: bold 120px/1 "arial";
+  color: #fff;
+}
+.loading_page p {
+  font: bold 40px/1 "arial";
+  color: #fff;
+}
+.loading_page.on {
+  top: -100%;
+}
+
+.bg_filter {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 11;
+}
+
+.more_player {
+  width: 450px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  z-index: 15;
+  transition: 1s;
+  box-shadow: 0px 25px 60px 0px rgba(97, 45, 45, 0.4);
+  background: #eee;
+}
+.more_player .more_player_wrap {
+  width: 100%;
+  height: 30%;
+  background: #fef4ea;
+  padding: 20px;
+}
+.more_player .more_player_wrap .more_info {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+.more_player .more_player_wrap .more_info .more_thumb {
+  width: 120px;
+  height: 120px;
+  background-size: 212px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.more_player .more_player_wrap .more_info .more_inner_info {
+  width: calc(100% - 120px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 20px;
+}
+.more_player .more_player_wrap .more_info .more_inner_info .song_tit {
+  font: bold 24px/1 "arial";
+  color: #111;
+  margin-bottom: 10px;
+}
+.more_player .more_player_wrap .more_info .more_inner_info .singer {
+  font: bold 16px/1 "arial";
+  color: #999;
+}
+.more_player .more_player_wrap .more_player_btn {
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0;
+}
+.more_player .more_player_wrap .more_player_btn span {
+  display: inline-block;
+  width: 35px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.more_player .more_player_wrap .more_player_btn span.on {
+  display: none;
+}
+.more_player .more_player_list {
+  width: 100%;
+  height: 70%;
+}
+.more_player.on {
+  right: 0;
 }
 
 @keyframes vinyl {
