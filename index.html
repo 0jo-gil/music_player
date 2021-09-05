@@ -58,7 +58,6 @@
         <div class="wrapper">
             
             <article class="frame">
-                <div id="player"></div>
             </article>
             <article class="frame">
             </article>
@@ -95,16 +94,16 @@
             </div>
 
             <div class="player_btn">
-                <span class="prev">
+                <span class="prev prev_btn">
                     <i class="fas fa-step-backward"></i>
                 </span>
-                <span class="play">
+                <span class="play" onclick="playYoutube()">
                     <i class="fas fa-play"></i>
                 </span>
-                <span class="pause on">
+                <span class="pause on" onclick="pauseYoutube()">
                     <i class="fas fa-pause"></i>
                 </span>
-                <span class="next">
+                <span class="next next_btn">
                     <i class="fas fa-step-forward"></i>
                 </span>
             </div>
@@ -123,24 +122,35 @@
                     <p class="song_tit">hi</p>
                     <h3 class="singer">Chet Baker</h3>
                 </div>
+
+                <div class="more_close_btn">
+                    <a href="#" class="more_close_inner_btn"></a>
+                </div>
             </div>
 
             <div class="more_player_btn">
-                <span class="prev">
+                <span class="prev prev_btn">
                     <i class="fas fa-step-backward"></i>
                 </span>
-                <span class="play">
+                <span class="play" onclick="playYoutube()">
                     <i class="fas fa-play"></i>
                 </span>
-                <span class="pause on">
+                <span class="pause on" onclick="pauseYoutube()">
                     <i class="fas fa-pause"></i>
                 </span>
-                <span class="next">
+                <span class="next next_btn">
                     <i class="fas fa-step-forward"></i>
                 </span>
             </div>
         </div>
-        <div class="more_player_list"></div>
+        <div class="more_player_list">
+            <ul>
+
+            </ul>
+        </div>
+
+        
+        <div id="player"></div>
     </div>
 </body>
 </html>

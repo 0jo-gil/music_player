@@ -190,11 +190,6 @@ input, a, button {
 #main .wrapper .frame:hover .lp_frame {
   transform: translateY(-50%);
 }
-#main .wrapper .frame #player {
-  position: fixed;
-  top: -9999px;
-  left: -9999px;
-}
 #main .mini_player {
   height: 40px;
   position: absolute;
@@ -212,7 +207,7 @@ input, a, button {
 #main .mini_player .track_info .thumb {
   width: 40px;
   height: 100%;
-  background-size: cover;
+  background-size: 70px;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -354,6 +349,7 @@ input, a, button {
   display: flex;
   justify-content: center;
   margin-bottom: 60px;
+  position: relative;
 }
 .more_player .more_player_wrap .more_info .more_thumb {
   width: 120px;
@@ -378,6 +374,41 @@ input, a, button {
   font: bold 16px/1 "arial";
   color: #999;
 }
+.more_player .more_player_wrap .more_info .more_close_btn {
+  width: 24px;
+  height: 10px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.more_player .more_player_wrap .more_info .more_close_btn .more_close_inner_btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.more_player .more_player_wrap .more_info .more_close_btn .more_close_inner_btn::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #111;
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0;
+  transform: rotate(-45deg);
+}
+.more_player .more_player_wrap .more_info .more_close_btn .more_close_inner_btn::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #111;
+  position: absolute;
+  bottom: calc(50% - 1px);
+  left: 0;
+  transform: rotate(45deg);
+}
 .more_player .more_player_wrap .more_player_btn {
   width: 120px;
   display: flex;
@@ -399,9 +430,56 @@ input, a, button {
 .more_player .more_player_list {
   width: 100%;
   height: 70%;
+  padding: 40px 20px;
+  overflow: auto;
+}
+.more_player .more_player_list ul {
+  width: 100%;
+  height: auto;
+}
+.more_player .more_player_list ul .more_inner_list {
+  width: 100%;
+  margin-bottom: 15px;
+  transition: 0.5s;
+}
+.more_player .more_player_list ul .more_inner_list a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.more_player .more_player_list ul .more_inner_list a .more_list_thumb {
+  width: 70px;
+  height: 70px;
+  background-repeat: no-repeat;
+  background-size: 124px;
+  background-position: center;
+}
+.more_player .more_player_list ul .more_inner_list a .more_list_info {
+  width: calc(100% - 70px);
+  height: 70px;
+  padding: 10px 0px 10px 20px;
+}
+.more_player .more_player_list ul .more_inner_list a .more_list_info .more_tit {
+  font: bold 18px/1 "arial";
+  color: #111;
+  margin-bottom: 10px;
+}
+.more_player .more_player_list ul .more_inner_list a .more_list_info span {
+  font: 15px/1 "arial";
+  color: #999;
+}
+.more_player .more_player_list ul .more_inner_list.on {
+  background: #fef4ea;
 }
 .more_player.on {
   right: 0;
+}
+
+#player {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
 }
 
 @keyframes vinyl {

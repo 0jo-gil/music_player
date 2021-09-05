@@ -2,6 +2,12 @@ let index = -1;
 let on = 0;
 let len = $(".frame").length -1;
 
+let list_num = 0;
+let wheelNum;
+
+let list_interval;
+
+
 
 var tag = document.createElement('script');
 
@@ -12,6 +18,15 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 
 callData();
+
+$(".more_close_inner_btn").on("click", function(e){
+    e.preventDefault();
+    $(".more_player").removeClass("on");
+    $(".bg_filter").fadeOut(500, function(){
+        $(this).remove();
+    });
+    $(".mini_player").removeClass("on");
+})
 
 $(".more_inner_btn").on("click", function(e){
     e.preventDefault();
@@ -27,6 +42,10 @@ $(".more_inner_btn").on("click", function(e){
             .fadeIn(500)
     );
 });
+
+
+
+
 
 function toggle(el){
     let isOn = $(el).hasClass("on");
@@ -53,10 +72,7 @@ function callData(){
     })
     .success(function(data){
         let items= data.items;
-
-        setTimeout(()=>{
-            createList(items);
-        }, 500);
+        createList(items);
     })
     .error(function(err){
         console.log(err);
@@ -65,21 +81,42 @@ function callData(){
 
 
 function createList(items){
-    let vidId1 = items[0].snippet.resourceId.videoId;
-    console.log(vidId1);
-    onYouTubeIframeAPIReady("9YG3Dr3sQGA");
+    let imgSrc1 = items[0].snippet.thumbnails.high.url;
+    let tit1 = items[0].snippet.title;
+
+    $(".thumb").css({backgroundImage: `url(${imgSrc1})`});
+    $(".song_tit").text(tit1);
+
 
     for(let el of items){
         index++;
+        let tit = el.snippet.title;
         var imgSrc = el.snippet.thumbnails.high.url;
 
         $(".frame").eq(index).css({
             backgroundImage: `url(${imgSrc})`,
             zIndex: index * -1
         });
-        $(".frame").eq(0).find("iframe").attr({
-            src: "https://www.youtube.com/embed/"+vidId1
-        });
+
+        $(".more_player_list").find("ul")
+            .append(
+                $("<li class='more_inner_list' data-index="+index+">")
+                    .append(
+                        $("<a href='#'>")
+                            .append(
+                                $("<div class='more_list_thumb'>")
+                                    .css({
+                                        backgroundImage: `url(${imgSrc})`
+                                    }),
+                                $("<div class='more_list_info'>")
+                                    .append(
+                                        $("<p class='more_tit'>").text(tit),
+                                        $("<span>").text("Chet Baker")
+                                    )
+                            )
+                    )
+            )
+        $(".more_player_list").find("ul").children("li").first().addClass("on");
 
         document.querySelector("#main").addEventListener("mousewheel", (e)=>{
             let wheel = e.deltaY;
@@ -95,45 +132,47 @@ function createList(items){
             }
         })
     };
-
-
-
-    $(".play").on("click", function(){
-        player.playVideo();
-        $(".pause").removeClass("on");
-        $(".play").addClass("on");
-        $(".vinyl").removeClass("stop");
-    });
-    
-    $(".pause").on("click", function(){
-        player.pauseVideo();
-        $(".play").removeClass("on");
-        $(".pause").addClass("on");
-        $(".vinyl").addClass("stop");
-    });
-
-    $(".next").on("click", function(){
+    $(".next_btn").on("click", function(){
         wheelDown(items);
-        $(".pause").removeClass("on");
-        $(".play").addClass("on");
-        player.playVideo();
-    });
-
-    $(".prev").on("click", function(){
-        wheelUp(items);
-        $(".pause").removeClass("on");
-        $(".play").addClass("on");
-        player.playVideo();
     });
     
-};
+    $(".prev_btn").on("click", function(){
+        wheelUp(items);
+    });
 
+    $(".more_inner_list").on("click", function(){
+        let list_index = $(this).index();
+        let imgSrc = $(this).find(".more_list_thumb").css("background-image");
+        let tit = $(this).find(".more_tit").text();
+        let dataIndex = $(this).attr("data-index");
+
+        indexVideo(list_index);
+
+        $(".thumb").css({backgroundImage: imgSrc});
+        $(".song_tit").text(tit);
+
+        // $(".more_inner_list").removeClass("on");
+        // $(this).addClass("on"); 
+
+        wheelNum = 0;
+
+
+        list_interval = setInterval(function(){
+            wheelNum++;
+            wheelDown(items);
+
+            if(wheelNum == dataIndex){
+                clearInterval(list_interval);
+            };
+        }, 200);
+        
+    });
+
+};
 
 const main = document.querySelector("#main");
 const frame = document.querySelectorAll(".frame");
 
-const play = document.createElement("div");
-play.id = "player";
 
 let active = 0;
 let position = 0;
@@ -164,9 +203,10 @@ function wheelDown(items){
     }, 700);
 
     $(".frame").first().appendTo($(".wrapper"));
-    $("#player").remove();
 
-    let vidId = items[num].snippet.resourceId.videoId;
+    $(".more_inner_list").removeClass("on");
+    $(".more_inner_list").eq(num).addClass("on");
+
     let imgSrc = items[num].snippet.thumbnails.high.url;
     let tit = items[num].snippet.title;
 
@@ -195,7 +235,17 @@ function wheelDown(items){
             position = 0;
         };
 
-        $(".frame").eq(0).append(play);
+        let data_index = $(".more_inner_list").eq(position -1).attr("data-index");
+
+        data_index = parseInt(data_index);
+        if(data_index <= 0){
+            data_index = frame.length;
+        };
+
+
+        $(".more_inner_list").eq(position-1).attr("data-index", data_index -1);
+
+
 
         $(".frame").eq(position).css({
             top: `calc(${70}% + ${-35 * (position +1)}px)`,
@@ -212,10 +262,7 @@ function wheelDown(items){
             rot = 0;
         };
     };
-
-
-    onYouTubeIframeAPIReady(vidId);
- 
+    player.playVideoAt(num);
 };
 
 function wheelUp(items){
@@ -227,11 +274,12 @@ function wheelUp(items){
     setTimeout(function(){
         isScroll = false;
     }, 700);
+
+    $(".more_inner_list").removeClass("on");
+    $(".more_inner_list").eq(num).addClass("on");
     
     $(".frame").last().prependTo($(".wrapper"));
-    $("#player").remove();
 
-    let vidId = items[num].snippet.resourceId.videoId;
     let imgSrc = items[num].snippet.thumbnails.high.url;
     let tit = items[num].snippet.title;
 
@@ -258,7 +306,15 @@ function wheelUp(items){
             position = frame.length;
         };
 
-        $(".frame").eq(0).append(play);
+
+        let data_index = $(".more_inner_list").eq(position -1).attr("data-index");
+
+        data_index = parseInt(data_index);
+        if(data_index >= frame.length -1){
+            data_index = -1;
+        };
+
+        $(".more_inner_list").eq(position-1).attr("data-index", data_index +1);
 
         $(".frame").eq(position -1).css({
             top: `calc(${70}% + ${-35 * position}px)`,
@@ -276,37 +332,107 @@ function wheelUp(items){
             rot = 0;
         };
     };
- 
-    onYouTubeIframeAPIReady(vidId);
+    player.playVideoAt(num);
 };
 
-function onYouTubeIframeAPIReady(vidId) {
+function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '360',
         width: '640',
-        playerVars: { 'autoplay': 1, 'controls': 0 },
-        videoId: vidId,
+        playerVars: {
+            listType: "playlist",
+            list: "PLh1ZBMxUOR2EyhfqVDn2qWejw2st1Hm0V"
+        },
         events: {
             'onReady': onPlayerReady,
-            // 'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange
         }
     });
 };
 
 function onPlayerReady(event) {
-    event.target.playVideo();
+    // event.target.playVideo();
+    // console.log('onPlayerReady 실행');
+    // console.log(event);
+
+
+    $(".next").on("click", function(){
+        if(event.target.playerInfo.playlistIndex == 7){
+            player.playVideoAt(0);
+        } else {
+            nextVideo();
+        };
+    });
+
+    $(".prev").on("click", function(){
+        if(event.target.playerInfo.playlistIndex == 0){
+            player.playVideoAt(7);
+        } else {
+            prevVideo();
+        };
+    });
+
+};
+var playerState;
+var done = false;
+
+const playBtn =  document.querySelectorAll(".play");
+const pauseBtn = document.querySelectorAll(".pause");
+
+function onPlayerStateChange(event) {
+    // if (event.data == YT.PlayerState.PLAYING && !done) {
+    //     // setTimeout(stopVideo, 6000);
+    //     done = true;
+    // };
+    // playerState = event.data == YT.PlayerState.ENDED ? '종료' :
+    //         event.data == YT.PlayerState.PLAYING ? '재생' :
+    //         event.data == event.data == YT.PlayerState.PAUSED ? '일시중지 됨' :
+    //         event.data == YT.PlayerState.BUFFERING ? '버퍼링 중' :
+    //         event.data == YT.PlayerState.CUED ? '재생준비 완료됨' :
+    //         event.data == -1 ? '시작되지 않음' : '예외';
+    
+ 
+    if(event.data == 1){
+        toggleBtn(pauseBtn, playBtn, "on");
+    };
+    if(event.data == 2){
+        toggleBtn(playBtn, pauseBtn, "on");
+    };
+
+    // console.log('onPlayerStateChange 실행: ' + playerState);
+
+    // collectPlayCount(event.data);
 };
 
-var done = false;
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING && !done) {
-        // setTimeout(stopVideo, 6000);
-        done = true;
+function toggleBtn(element1, element2, className){
+    for(let el of element1){
+        el.classList.remove(className);
     };
+    for(let el of element2){
+        el.classList.add(className);
+    };
+}
+
+function playYoutube() {
+    // 플레이어 자동실행 (주의: 모바일에서는 자동실행되지 않음)
+    player.playVideo();
 };
+function pauseYoutube() {
+    player.pauseVideo();
+};
+
 function stopVideo() {
     player.stopVideo();
 };
 
+function indexVideo(num){
+    player.playVideoAt(num);
+};
 
+function nextVideo(){
+    player.nextVideo();
+};
 
+function prevVideo(){
+    player.previousVideo();
+}
